@@ -1,5 +1,7 @@
+# parser for command line options
 from argparse import ArgumentParser
 import threading
+# module to control the GPIO on a raspberry pi
 import RPi.GPIO as GPIO
 
 parser = ArgumentParser()
@@ -7,7 +9,8 @@ parser.add_argument("-d", "--duration", type=int, default=30, dest="duration")
 
 args = parser.parse_args();
 
-
+# specifies that you are referring to the pins by the
+# number of the pin on board
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(16, GPIO.OUT)
 GPIO.setup(18, GPIO.OUT)
