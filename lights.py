@@ -37,6 +37,7 @@ def stop():
 
 start();
 
+# after the duration the user specifies, the yellow led will turn on
 t1 = threading.Timer(min(args.duration, args.duration-10), yellow).start()
 t2 = threading.Timer(args.duration, stop).start()
 
