@@ -9,7 +9,7 @@ parser.add_argument("-d", "--duration", type=int, default=30, dest="duration")
 
 args = parser.parse_args();
 
-# specifies that you are referring to the pins 
+# specifies that you are referring to the pins
 # by the number of the pin on board.
 # GPIO.BCM refers to pins by the Broadcom chip specific pin number
 # which are the numbers after "GPIO" on slide #6
@@ -19,7 +19,7 @@ GPIO.setup(16, GPIO.OUT)
 GPIO.setup(18, GPIO.OUT)
 GPIO.setup(22, GPIO.OUT)
 
-def start():
+def green():
 	# setting the digital output of a pin to True
 	# will drive it to 3.3V
 	GPIO.output(16, True)
@@ -31,14 +31,17 @@ def yellow():
 	GPIO.output(16, False)
 	GPIO.output(18, True)
 
-def stop():
-	GPIO.output(18, False)
+def red():
+        GPIO.output(18, False)
 	GPIO.output(22, True)
 
-start();
+# start with green
+green();
 
-# after the duration the user specifies, the yellow led will turn on
+# 10 seconds before duration the user specifies ends, the yellow led will turn on
 t1 = threading.Timer(min(args.duration, args.duration-10), yellow).start()
-t2 = threading.Timer(args.duration, stop).start()
+
+# turn on the red led when time runs out
+t2 = threading.Timer(args.duration, red).start()
 
 
