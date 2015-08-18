@@ -1,6 +1,6 @@
 # parser for command line options
 from argparse import ArgumentParser
-import threading
+import time
 # module to control the GPIO on a raspberry pi
 import RPi.GPIO as GPIO
 
@@ -26,10 +26,12 @@ def green():
 	# pin output is set to 0V
 	GPIO.output(18, False)
 	GPIO.output(22, False)
+        time.sleep(max(0, args.duration - 10))
 
 def yellow():
 	GPIO.output(16, False)
 	GPIO.output(18, True)
+        time.sleep(10)
 
 def red():
         GPIO.output(18, False)
@@ -39,9 +41,7 @@ def red():
 green();
 
 # 10 seconds before duration the user specifies ends, the yellow led will turn on
-t1 = threading.Timer(min(args.duration, args.duration-10), yellow).start()
+yellow();
 
 # turn on the red led when time runs out
-t2 = threading.Timer(args.duration, red).start()
-
-
+red();
